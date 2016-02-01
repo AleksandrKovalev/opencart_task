@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>d_social_login_header</id>
+	<version>2.x</version>
+	<vqmver required="true">2.5.0</vqmver>
+	<author>dreamvention.com</author>
+	
+	<file name="catalog/controller/common/header.php">
+		<operation error="skip" info="add loading d_social_login controller">
+			<search position="after"><![CDATA[public function index() {]]></search>
+			<add><![CDATA[$data['social_login'] = $this->load->controller('module/d_social_login');]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/view/theme/default/template/common/header.tpl">
+		<operation error="skip" info="add d_social_login module to header template">
+			<search position="replace"><![CDATA[<?php echo $currency; ?>]]></search>
+			<add><![CDATA[<div class="pull-left"><?php echo $currency; ?><?php echo $social_login; ?></div>]]></add>
+		</operation>
+	</file>	
+	
+	<file name="catalog/view/theme/default/template/module/d_social_login.tpl">
+		<operation error="skip" info="add new css styles to socila login template">
+			<search position="before"><![CDATA[</style>]]></search>
+			<add><![CDATA[
+				#d_social_login{
+				  float: left;
+				}
+			  .fly{
+				position: absolute;
+				left: 10px;
+				right: 10px;
+				top: 0;
+				border-radius: 0;
+				z-index: 99;
+			  }
+			#top>.container{
+			  position: relative;
+			}				
+			]]></add>
+		</operation>
+		
+		<operation error="skip" info="add new social login errors template">
+			<search position="replace"><![CDATA[<div class="alert alert-warning"><?php echo $error; ?></div>]]></search>
+			<add><![CDATA[
+			  <div class="alert alert-warning fly">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  <?php echo $error; ?>
+			  </div>
+			]]></add>
+		</operation>	
+
+	</file>	
+
+</modification>
